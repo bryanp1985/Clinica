@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Clinica.Models.Cita>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Citas
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Clinica</th>
+            <th colspan="3"></th>
+            <th>Tipo</th>
+        </tr>
+        @foreach (var o in Model)
+        {
+            <tr>
+                <td>@o.Id</td>
+                <td>@o.Clinica</td>
+                <td colspan="3"></td>
+                <td>@o.Tipo</td>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th>Paciente</th>
+                <th>Cantidad</th>
+                <th></th>
+            </tr>
+            foreach (var ol in o.Citas)
+            {
+                <tr>
+                    <td colspan="2"></td>
+                    <td>@ol.Paciente.Nombre</td>
+                    <td>@ol.Count</td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+@using (Html.BeginForm("SaveCita", "Prep"))
+{
+    <input type="hidden" name="Paciente" value="John Poet" />
+    <input type="hidden" name="TotalCost" value="91" />
+    <input type="hidden" name="Citas[0].PacienteId" value="6" />
+    <input type="hidden" name="Citas[0].Count" value="1" />
+    <input type="hidden" name="Citas[1].PacienteId" value="8" />
+    <input type="hidden" name="Citas[1].Count" value="1" />
+
+    <button class="btn btn-primary" type="submit">Create</button>
+    <a href="/prep/DeleteCita/2" class="btn btn-primary">Delete</a>
+}
